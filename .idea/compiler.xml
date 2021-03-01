@@ -10,9 +10,9 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="klondike" target="14" />
-      <module name="log" target="14" />
-      <module name="Projects" target="14" />
+      <module name="klondike" target="11" />
+      <module name="log" target="11" />
+      <module name="Projects" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
