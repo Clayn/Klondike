@@ -7,6 +7,7 @@ import de.clayntech.klondike.impl.exec.*;
 import de.clayntech.klondike.log.KlondikeLoggerFactory;
 import de.clayntech.klondike.sdk.ApplicationRepository;
 import de.clayntech.klondike.sdk.KlondikeApplication;
+import de.clayntech.klondike.sdk.evt.Events;
 import de.clayntech.klondike.sdk.exec.Step;
 import de.clayntech.klondike.sdk.param.StepParameter;
 import org.slf4j.Logger;
@@ -20,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.PathMatcher;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -103,7 +105,10 @@ public class KlondikeApplicationRepository implements ApplicationRepository {
             StepParameter<File> workingDir=new StepParameter<>("launch.workingdir",File.class);
             workingDir.setValue(app.getExecutable().getParentFile());
             launchStep.getParameter().add(workingDir);
+            Step preLogStep=new LogStep();
+            preLogStep.getTrigger().addAll(Arrays.asList(Events.POST_EXECUTION,Events.PRE_EXECUTION));
             app.getScript().getSteps().add(launchStep);
+            app.getScript().getSteps().add(preLogStep);
         }
         try(BufferedWriter writer=Files.newBufferedWriter(directory.resolve(app.getName()+".kapp"))) {
             Gson gson=new GsonBuilder()

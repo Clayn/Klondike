@@ -1,15 +1,15 @@
 package de.clayntech.klondike.sdk.exec;
 
-import de.clayntech.klondike.log.KlondikeLoggerFactory;
 import de.clayntech.klondike.sdk.param.StepParameter;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Step {
 
-    protected final Logger LOG= KlondikeLoggerFactory.getLogger();
+    protected final Logger LOG= LoggerFactory.getLogger(getClass());
 
     protected final List<StepParameter<?>> parameters=new ArrayList<>();
 
