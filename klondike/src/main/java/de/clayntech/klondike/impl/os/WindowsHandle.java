@@ -9,7 +9,9 @@ import java.util.function.Consumer;
 
 public class WindowsHandle implements OSHandle {
 
+    public static final int SUCCESS=0;
     public static final int NO_DESKTOP=1001;
+
 
     private void processResult(int result, Consumer<Integer> consumer) {
         if(consumer!=null) {
@@ -23,11 +25,15 @@ public class WindowsHandle implements OSHandle {
         if(!processAllowed) {
             if(!desktopSupported) {
                 processResult(NO_DESKTOP,resultConsumer);
+            }else {
+                Desktop.getDesktop().open(executable);
+                processResult(SUCCESS,resultConsumer);
             }
         }
         boolean process= executable.getName().endsWith(".exe");
         if(!process&&desktopSupported) {
             Desktop.getDesktop().open(executable);
+            processResult(SUCCESS,resultConsumer);
         }else {
             Thread t=new Thread(() -> {
                 try {

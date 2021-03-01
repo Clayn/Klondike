@@ -1,6 +1,8 @@
 package de.clayntech.klondike.impl.exec;
 
+import de.clayntech.klondike.impl.KlondikeRunner;
 import de.clayntech.klondike.impl.i18n.KlondikeTranslator;
+import de.clayntech.klondike.sdk.evt.Events;
 import de.clayntech.klondike.sdk.exec.ExecutionContext;
 import de.clayntech.klondike.sdk.exec.Step;
 import de.clayntech.klondike.sdk.exec.StepDefinition;
@@ -18,7 +20,12 @@ public class LaunchStep extends Step {
     public void execute(ExecutionContext context) throws IOException {
         File executable=context.getExecutable();
         File workingDir=context.getParameter().get("launch.workingdir",executable.getParentFile());
-        LOG.debug("Launching {} with working directory: {}",executable,workingDir);
-        OSHandle.getHandle().execute(workingDir,executable,true);
+        context.getSharedParameter().set(LogStep.MESSAGE_PARAMETER,String.format("Launching application %s with %s",context.getParameter().get(KlondikeRunner.APP_NAME,String.class),executable.getAbsolutePath()));
+        context.trigger(Events.PRE_EXECUTION);
+        OSHandle.getHandle().execute(workingDir, executable, true, integer -> {
+            context.getSharedParameter().set(LogStep.MESSAGE_PARAMETER, String.format("Application finished with: %d", integer));
+            context.trigger(Events.POST_EXECUTION);
+        });
+
     }
 }
