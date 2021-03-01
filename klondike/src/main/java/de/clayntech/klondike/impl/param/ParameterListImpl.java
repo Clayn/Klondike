@@ -1,14 +1,13 @@
 package de.clayntech.klondike.impl.param;
 
-import de.clayntech.klondike.sdk.param.ParameterList;
+import de.clayntech.klondike.sdk.param.SharedParameterList;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @SuppressWarnings("unchecked")
-public class ParameterListImpl implements ParameterList {
-    private final Map<String,Object> parameters=new HashMap<>();
-
+public class ParameterListImpl implements SharedParameterList {
+    protected final Map<String,Object> parameters=new HashMap<>();
 
     @Override
     public boolean contains(String parameter) {
@@ -41,6 +40,7 @@ public class ParameterListImpl implements ParameterList {
         return (T) parameters.get(parameter);
     }
 
+    @Override
     public void set(String parameter, Object value) {
         parameters.put(parameter,value);
     }
