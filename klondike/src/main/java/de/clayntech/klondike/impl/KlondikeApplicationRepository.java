@@ -7,7 +7,6 @@ import de.clayntech.klondike.impl.exec.*;
 import de.clayntech.klondike.log.KlondikeLoggerFactory;
 import de.clayntech.klondike.sdk.ApplicationRepository;
 import de.clayntech.klondike.sdk.KlondikeApplication;
-import de.clayntech.klondike.sdk.err.NameInUseException;
 import de.clayntech.klondike.sdk.evt.Events;
 import de.clayntech.klondike.sdk.exec.Step;
 import de.clayntech.klondike.sdk.param.StepParameter;
