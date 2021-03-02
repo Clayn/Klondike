@@ -1,8 +1,10 @@
 package de.clayntech.klondike.cli;
 
+import de.clayntech.klondike.Klondike;
+
 import java.util.Scanner;
 
 public interface Command {
     @SuppressWarnings("SameReturnValue")
-    String perform(Scanner input, String... args) throws Exception;
+    String perform(Klondike klondike, Scanner input, String... args) throws Exception;
 }

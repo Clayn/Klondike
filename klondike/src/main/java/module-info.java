@@ -6,7 +6,11 @@ module klondike {
     requires org.slf4j;
     requires com.google.gson;
     requires java.desktop;
+    requires info.picocli;
     opens de.clayntech.klondike.impl to com.google.gson;
     opens de.clayntech.klondike.impl.exec to com.google.gson;
     opens de.clayntech.klondike.sdk.exec to com.google.gson;
+    opens de.clayntech.klondike to info.picocli;
+    opens de.clayntech.klondike.cli to info.picocli;
+    opens de.clayntech.klondike.util to info.picocli;
 }

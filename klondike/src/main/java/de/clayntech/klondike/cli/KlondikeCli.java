@@ -1,6 +1,9 @@
 package de.clayntech.klondike.cli;
 
+import de.clayntech.klondike.Klondike;
 import de.clayntech.klondike.impl.KlondikeRunner;
+import de.clayntech.klondike.log.KlondikeLoggerFactory;
+import de.clayntech.klondike.util.KlondikeVersion;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +17,11 @@ public class KlondikeCli {
     private final Map<String,Command> commands=new HashMap<>();
     private final KlondikeRunner runner=new KlondikeRunner();
     private Scanner sc;
+    private final Klondike klondike;
+
+    public KlondikeCli(Klondike klondike) {
+        this.klondike = klondike;
+    }
 
     {
         commands.put("echo",new EchoCommand());
@@ -47,21 +55,32 @@ public class KlondikeCli {
         return cmd;
     }
 
+    public void execute(String command, String... args) {
+        klondike.setState(0);
+        Command com=getCommand(command);
+        if(com!=null) {
+            String newPrompt= null;
+            try {
+                newPrompt = com.perform(klondike,sc, args);
+            } catch (Exception e) {
+                KlondikeLoggerFactory.getLogger().error("",e);
+                klondike.setState(-1);
+            }
+            prompt=newPrompt==null?DEFAULT_PROMPT:newPrompt;
+        }
+    }
 
-
-    public void start() throws Exception {
+    public void start() {
         boolean run;
         String input;
-        Command com;
+        KlondikeVersion.printHello(System.out);
         do{
             input=getInput();
             run=!input.startsWith(EXIT);
             if(run) {
-                com=getCommand(input);
-                if(com!=null) {
-                    String newPrompt=com.perform(sc, CliHelper.analyzeInput(input));
-                    prompt=newPrompt==null?DEFAULT_PROMPT:newPrompt;
-                }
+                String command=input.substring(0,input.contains(" ")?input.indexOf(" "):input.length());
+                String[] arguments=CliHelper.analyzeInput(input);
+                execute(command,arguments);
             }
         }while(run);
     }
