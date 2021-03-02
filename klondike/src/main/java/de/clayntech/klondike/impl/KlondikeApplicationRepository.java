@@ -7,6 +7,7 @@ import de.clayntech.klondike.impl.exec.*;
 import de.clayntech.klondike.log.KlondikeLoggerFactory;
 import de.clayntech.klondike.sdk.ApplicationRepository;
 import de.clayntech.klondike.sdk.KlondikeApplication;
+import de.clayntech.klondike.sdk.err.NameInUseException;
 import de.clayntech.klondike.sdk.evt.Events;
 import de.clayntech.klondike.sdk.exec.Step;
 import de.clayntech.klondike.sdk.param.StepParameter;
@@ -91,7 +92,7 @@ public class KlondikeApplicationRepository implements ApplicationRepository {
         boolean launchFound=false;
         for(KlondikeApplication existing:getApplications()) {
             if(existing.getName().equals(app.getName())) {
-                throw new IllegalArgumentException();
+                throw new NameInUseException();
             }
         }
         for(Step steps:app.getScript().getSteps()) {

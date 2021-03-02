@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="Spell-Exclude" pattern="file:.gitlab-ci.yml" />
+</component>
