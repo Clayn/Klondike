@@ -1,9 +1,7 @@
 package de.clayntech.klondike.impl;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import de.clayntech.klondike.impl.exec.*;
+import de.clayntech.klondike.impl.exec.LaunchStep;
+import de.clayntech.klondike.impl.exec.LogStep;
 import de.clayntech.klondike.log.KlondikeLoggerFactory;
 import de.clayntech.klondike.sdk.ApplicationRepository;
 import de.clayntech.klondike.sdk.KlondikeApplication;
@@ -11,42 +9,41 @@ import de.clayntech.klondike.sdk.err.NameInUseException;
 import de.clayntech.klondike.sdk.evt.Events;
 import de.clayntech.klondike.sdk.exec.Step;
 import de.clayntech.klondike.sdk.param.StepParameter;
+import de.clayntech.klondike.sdk.util.ApplicationFormatter;
+import de.clayntech.klondike.sdk.util.Formatter;
 import org.slf4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.PathMatcher;
+import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-@SuppressWarnings("rawtypes")
 public class KlondikeApplicationRepository implements ApplicationRepository {
 
     private static final Logger LOG= KlondikeLoggerFactory.getLogger();
     private final Path directory;
     private final List<KlondikeApplication> applications=new ArrayList<>();
+    private final Formatter<KlondikeApplication> formatter=new ApplicationFormatter();
 
     public KlondikeApplicationRepository(Path directory) throws IOException {
         Objects.requireNonNull(directory);
-        if(!Files.isDirectory(directory)) {
-            throw new IllegalArgumentException();
-        }
-        if(!Files.exists(directory)) {
-            Files.createDirectories(directory);
-        }
         this.directory = directory;
         loadApplications();
     }
 
     private void loadApplications() throws IOException {
+        if(Files.exists(directory)&&!Files.isDirectory(directory)) {
+            throw new IllegalArgumentException();
+        }
+        if(!Files.exists(directory)) {
+            Files.createDirectories(directory);
+        }
         applications.clear();
         PathMatcher matcher = FileSystems.getDefault().getPathMatcher("glob:**.kapp");
         applications.addAll(Files.list(directory)
@@ -56,16 +53,8 @@ public class KlondikeApplicationRepository implements ApplicationRepository {
     }
 
     private KlondikeApplication parseApp(Path p) {
-        Gson gson=new GsonBuilder()
-                .registerTypeAdapter(new TypeToken<StepParameter>(){}.getType(),new GsonStepParameterAdapter())
-                .registerTypeAdapter(new TypeToken<Step>(){}.getType(),new GsonStepAdapter())
-                .registerTypeAdapter(new TypeToken<File>(){}.getType(),new GsonFileAdapter())
-                .registerTypeAdapter(new TypeToken<Path>(){}.getType(),new GsonPathAdapter())
-                .disableHtmlEscaping()
-                .create();
-
         try {
-            return gson.fromJson(readJson(p),KlondikeApplicationImpl.class);
+            return formatter.fromString(readJson(p));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -84,6 +73,11 @@ public class KlondikeApplicationRepository implements ApplicationRepository {
 
     @Override
     public List<KlondikeApplication> getApplications() {
+        try {
+            loadApplications();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         return applications;
     }
 
@@ -111,16 +105,24 @@ public class KlondikeApplicationRepository implements ApplicationRepository {
             app.getScript().getSteps().add(launchStep);
             app.getScript().getSteps().add(preLogStep);
         }
-        try(BufferedWriter writer=Files.newBufferedWriter(directory.resolve(app.getName()+".kapp"))) {
-            Gson gson=new GsonBuilder()
-                    .registerTypeAdapter(new TypeToken<StepParameter>(){}.getType(),new GsonStepParameterAdapter())
-                    .registerTypeAdapter(new TypeToken<Step>(){}.getType(),new GsonStepAdapter())
-                    .registerTypeAdapter(new TypeToken<File>(){}.getType(),new GsonFileAdapter())
-                    .registerTypeAdapter(new TypeToken<Path>(){}.getType(),new GsonPathAdapter())
-                    .disableHtmlEscaping()
-                    .create();
-            writer.write(gson.toJson(app));
+        writeApplicationFile(app);
+    }
+
+    private void writeApplicationFile(KlondikeApplication app) throws IOException {
+        try(BufferedWriter writer=Files.newBufferedWriter(directory.resolve(app.getName()+".kapp"), StandardOpenOption.CREATE,StandardOpenOption.TRUNCATE_EXISTING,StandardOpenOption.WRITE)) {
+            writer.write(formatter.toString(app));
             writer.flush();
         }
+        loadApplications();
+    }
+
+    @Override
+    public void update(KlondikeApplication app) throws IOException {
+        boolean exists=getApplication(app.getName())!=null;
+        if(!exists) {
+            register(app);
+            return;
+        }
+        writeApplicationFile(app);
     }
 }

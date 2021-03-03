@@ -13,7 +13,7 @@ import java.io.File;
 import java.io.IOException;
 
 @StepDefinition(name = "klondike.impl.launch",translator = KlondikeTranslator.class,parameter = {
-        @ParameterDefinition(type= File.class,value="launch.workingdir",optional = false)
+        @ParameterDefinition(type= File.class, name ="launch.workingdir",optional = false)
 })
 public class LaunchStep extends Step {
     @Override

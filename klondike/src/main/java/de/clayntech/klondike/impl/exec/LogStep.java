@@ -8,10 +8,10 @@ import de.clayntech.klondike.sdk.param.ParameterDefinition;
 
 
 @StepDefinition(name = "klondike.impl.log",translator = KlondikeTranslator.class,parameter = {
-        @ParameterDefinition(type= String.class,value=LogStep.MESSAGE_PARAMETER,optional = false)
+        @ParameterDefinition(type= String.class, name =LogStep.MESSAGE_PARAMETER,optional = false)
 })
 public class LogStep extends Step {
-    static final String MESSAGE_PARAMETER="log.message";
+    public static final String MESSAGE_PARAMETER="log.message";
 
     @Override
     public void execute(ExecutionContext context) {
