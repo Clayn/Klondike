@@ -9,5 +9,12 @@ public interface ApplicationRepository {
 
     void register(KlondikeApplication app) throws IOException;
 
+    void update(KlondikeApplication app) throws IOException;
+
+    default KlondikeApplication getApplication(String name) throws IOException {
+        return getApplications().stream().filter((app)->name.equals(app.getName()))
+                .findFirst().orElse(null);
+    }
+
     default void configure(Map<String,String> parameter) {}
 }

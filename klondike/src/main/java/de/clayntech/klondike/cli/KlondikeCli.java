@@ -28,6 +28,8 @@ public class KlondikeCli {
         commands.put("add",new AddCommand());
         commands.put("list",new ListCommand());
         commands.put("exec",new ExecCommand());
+        commands.put("add-step",new AddStepCommand());
+        commands.put("get",new GetSingleApplication());
     }
 
     private void print(String line,boolean newLine) {

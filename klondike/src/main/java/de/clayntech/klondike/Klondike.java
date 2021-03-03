@@ -20,8 +20,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Klondike implements Callable<Integer> {
     private static final Logger LOG= KlondikeLoggerFactory.getLogger();
 
-    private static final Klondike klondike=new Klondike();
-    private static final CommandLine CLI=new CommandLine(klondike);
+    private static CommandLine CLI;
 
     @CommandLine.Option(names = {"-R"},description = "Parameter for the selected repository")
     private Map<String,String> repoParameter;
@@ -32,13 +31,22 @@ public class Klondike implements Callable<Integer> {
     @CommandLine.Option(names = {"-i","--interactive"},description = "Starts the interactive mode")
     private boolean commandLine;
 
+    @CommandLine.Option(names = "-u",hidden = true)
+    private boolean testMode;
+
     @CommandLine.Parameters(description = "Execution parameters. Not used when interactive mode is enabled",paramLabel = "COMMANDS")
     private List<String> parameter;
     private final AtomicInteger state=new AtomicInteger(0);
     private ApplicationRepository repository;
+
     public static void main(String[] args){
+        Klondike klondike = new Klondike();
+        CLI=new CommandLine(klondike);
+        CLI.setUnmatchedArgumentsAllowed(true);
         int exit=CLI.execute(args);
-        System.exit(exit);
+        if(!klondike.testMode) {
+            System.exit(exit);
+        }
     }
 
     @SuppressWarnings("unchecked")
