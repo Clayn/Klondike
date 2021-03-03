@@ -17,6 +17,7 @@ import java.nio.file.Path;
 
 public class ApplicationFormatter implements Formatter<KlondikeApplication> {
 
+    @SuppressWarnings("rawtypes")
     private final Gson gson=new GsonBuilder()
                 .registerTypeAdapter(new TypeToken<StepParameter>(){}.getType(),new GsonStepParameterAdapter())
             .registerTypeAdapter(new TypeToken<Step>(){}.getType(),new GsonStepAdapter())

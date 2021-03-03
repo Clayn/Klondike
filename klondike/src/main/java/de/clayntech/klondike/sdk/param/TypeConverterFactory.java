@@ -21,6 +21,7 @@ public class TypeConverterFactory {
 
 
 
+    @SuppressWarnings("UnusedReturnValue")
     public TypeConverterFactory register(Object converter) {
         List<Method> converterMethods= Arrays.stream(converter.getClass().getDeclaredMethods())
                 .filter((m)->m.isAnnotationPresent(Converter.class))
@@ -33,12 +34,7 @@ public class TypeConverterFactory {
             if(this.converter.containsKey(type)) {
                 continue;
             }
-            TypeConverter<?> conv=new TypeConverter<Object>() {
-                @Override
-                public Object fromString(String val) throws Exception {
-                    return m.invoke(converter,val);
-                }
-            };
+            TypeConverter<?> conv= (TypeConverter<Object>) val -> m.invoke(converter, val);
             this.converter.put(type,conv);
         }
         return this;

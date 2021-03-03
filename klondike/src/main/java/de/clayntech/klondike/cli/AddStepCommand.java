@@ -69,7 +69,7 @@ public class AddStepCommand implements Command{
             }
             String value=entry.getValue();
             Class<?> parType=types.containsKey(name)?Class.forName(types.get(name)):String.class;
-            StepParameter stepParameter=null;
+            StepParameter stepParameter;
             TypeConverter<?> converter=factory.getConverter(parType);
             if(converter==null) {
                 continue;

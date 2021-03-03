@@ -1,7 +1,7 @@
 package de.clayntech.klondike.impl;
 
-import de.clayntech.klondike.impl.exec.*;
-import de.clayntech.klondike.sdk.util.ApplicationFormatter;
+import de.clayntech.klondike.impl.exec.LaunchStep;
+import de.clayntech.klondike.impl.exec.LogStep;
 import de.clayntech.klondike.log.KlondikeLoggerFactory;
 import de.clayntech.klondike.sdk.ApplicationRepository;
 import de.clayntech.klondike.sdk.KlondikeApplication;
@@ -9,6 +9,7 @@ import de.clayntech.klondike.sdk.err.NameInUseException;
 import de.clayntech.klondike.sdk.evt.Events;
 import de.clayntech.klondike.sdk.exec.Step;
 import de.clayntech.klondike.sdk.param.StepParameter;
+import de.clayntech.klondike.sdk.util.ApplicationFormatter;
 import de.clayntech.klondike.sdk.util.Formatter;
 import org.slf4j.Logger;
 
@@ -23,7 +24,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-@SuppressWarnings("rawtypes")
 public class KlondikeApplicationRepository implements ApplicationRepository {
 
     private static final Logger LOG= KlondikeLoggerFactory.getLogger();

@@ -8,6 +8,7 @@ import de.clayntech.klondike.sdk.util.Formatter;
 import java.util.Scanner;
 
 public class GetSingleApplication implements Command {
+    @SuppressWarnings("unchecked")
     @Override
     public String perform(Klondike klondike, Scanner input, String... args) throws Exception {
         if(args==null||args.length<1) {

@@ -3,17 +3,14 @@ package de.clayntech.klondike;
 import de.clayntech.klondike.impl.KlondikeApplicationRepository;
 import de.clayntech.klondike.impl.exec.LaunchStep;
 import de.clayntech.klondike.impl.exec.LogStep;
-import de.clayntech.klondike.log.KlondikeLoggerFactory;
 import de.clayntech.klondike.sdk.ApplicationRepository;
 import de.clayntech.klondike.sdk.KlondikeApplication;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -57,12 +54,7 @@ public class KlondikeTest {
         String name="Test";
         String file=pseudoFile.getAbsolutePath();
         executeKlondike(command,name,file);
-        Assertions.assertEquals(1, Objects.requireNonNull(directory.list(new FilenameFilter() {
-            @Override
-            public boolean accept(File dir, String name) {
-                return name.endsWith(".kapp");
-            }
-        })).length);
+        Assertions.assertEquals(1, Objects.requireNonNull(directory.list((dir, name1) -> name1.endsWith(".kapp"))).length);
         List<KlondikeApplication> apps=repository.getApplications();
         Assertions.assertEquals(1,apps.size());
         Assertions.assertEquals(name,apps.get(0).getName());
@@ -70,7 +62,7 @@ public class KlondikeTest {
     }
 
     @Test
-    public void testAddStep() throws IOException {
+    public void testAddStep() {
         testAddApplication();
         String command="add";
         String name="Test";

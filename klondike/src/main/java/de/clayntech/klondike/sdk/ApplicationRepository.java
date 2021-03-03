@@ -11,7 +11,7 @@ public interface ApplicationRepository {
 
     void update(KlondikeApplication app) throws IOException;
 
-    default KlondikeApplication getApplication(String name) throws IOException {
+    default KlondikeApplication getApplication(String name) {
         return getApplications().stream().filter((app)->name.equals(app.getName()))
                 .findFirst().orElse(null);
     }
