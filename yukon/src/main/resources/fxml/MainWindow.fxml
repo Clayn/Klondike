@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+
+
+<?import de.clayntech.yukon.util.MenuBuilder?>
+<?import javafx.scene.layout.FlowPane?>
+<BorderPane fx:id="pane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.clayntech.yukon.controller.MainWindowController" >
+    <top>
+        <MenuBuilder fx:factory="createMainMenu" />
+    </top>
+    <center>
+        <FlowPane fx:id="content" hgap="5" vgap="5">
+
+        </FlowPane>
+    </center>
+</BorderPane>

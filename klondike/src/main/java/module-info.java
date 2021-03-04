@@ -3,6 +3,7 @@ module klondike {
     exports de.clayntech.klondike.sdk.param;
     exports de.clayntech.klondike.sdk.exec;
     exports de.clayntech.klondike.sdk.i18n;
+    exports de.clayntech.klondike;
     requires org.slf4j;
     requires com.google.gson;
     requires java.desktop;
@@ -13,4 +14,6 @@ module klondike {
     opens de.clayntech.klondike to info.picocli;
     opens de.clayntech.klondike.cli to info.picocli;
     opens de.clayntech.klondike.util to info.picocli;
+    exports de.clayntech.klondike.sdk.util;
+    exports de.clayntech.klondike.log;
 }

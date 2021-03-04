@@ -1,0 +1,7 @@
+.application {
+    -fx-background-color:transparent;
+}
+
+.application:hover {
+    -fx-background-color:#dae7f3;
+}
