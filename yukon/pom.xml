@@ -9,9 +9,11 @@
     <version>0.1-SNAPSHOT</version>
 
     <name>Yukon</name>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <mainClass>de.clayntech.yukon.Launcher</mainClass>
+        <!--suppress CheckTagEmptyBody -->
         <packager></packager>
         <bin.dir>dist</bin.dir>
         <bin.version>1.0.0</bin.version>
@@ -96,19 +98,6 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <archive>
-                        <manifest>
-                            <mainClass>de.clayntech.yukon.Launcher</mainClass>
-                        </manifest>
-                    </archive>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>

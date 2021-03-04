@@ -4,6 +4,7 @@ module klondike {
     exports de.clayntech.klondike.sdk.exec;
     exports de.clayntech.klondike.sdk.i18n;
     exports de.clayntech.klondike;
+    exports de.clayntech.klondike.sdk.os;
     requires org.slf4j;
     requires com.google.gson;
     requires java.desktop;

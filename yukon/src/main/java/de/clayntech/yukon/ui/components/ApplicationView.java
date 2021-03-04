@@ -1,6 +1,5 @@
 package de.clayntech.yukon.ui.components;
 
-import de.clayntech.klondike.Klondike;
 import de.clayntech.klondike.sdk.KlondikeApplication;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;

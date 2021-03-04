@@ -3,8 +3,8 @@ package de.clayntech.yukon.util;
 import de.clayntech.yukon.ui.FXMLFile;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-
 import jfxtras.styles.jmetro.Style;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,6 +1,5 @@
 package de.clayntech.yukon.controller;
 
-import de.clayntech.klondike.log.KlondikeLoggerFactory;
 import de.clayntech.yukon.Yukon;
 import de.clayntech.yukon.bridge.KlondikeBridge;
 import javafx.fxml.FXML;

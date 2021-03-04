@@ -24,6 +24,7 @@ public class LoadedFXML {
         return parent;
     }
 
+    @SuppressWarnings("unchecked")
     public <T> T getController() {
         return (T)controller;
     }
