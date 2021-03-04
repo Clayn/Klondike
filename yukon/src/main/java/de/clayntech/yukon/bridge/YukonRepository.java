@@ -7,6 +7,7 @@ import de.clayntech.klondike.sdk.util.ApplicationFormatter;
 import de.clayntech.klondike.sdk.util.Formatter;
 import org.slf4j.Logger;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,6 +44,11 @@ public class YukonRepository implements ApplicationRepository {
 
     @Override
     public void update(KlondikeApplication app) {
+
+    }
+
+    @Override
+    public void update(KlondikeApplication app, String newName) throws IOException {
 
     }
 }
