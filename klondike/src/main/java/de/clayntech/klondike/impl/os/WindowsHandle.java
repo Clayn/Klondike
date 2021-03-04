@@ -1,6 +1,7 @@
 package de.clayntech.klondike.impl.os;
 
 import de.clayntech.klondike.sdk.os.OSHandle;
+import de.clayntech.klondike.sdk.os.OSType;
 
 import java.awt.*;
 import java.io.File;
@@ -17,6 +18,11 @@ public class WindowsHandle implements OSHandle {
         if(consumer!=null) {
             consumer.accept(result);
         }
+    }
+
+    @Override
+    public OSType getOSType() {
+        return OSType.WINDOWS;
     }
 
     @Override

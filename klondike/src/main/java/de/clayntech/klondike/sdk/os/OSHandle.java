@@ -13,6 +13,8 @@ public interface OSHandle {
         execute(directory,executable,processAllowed,(result)->{});
     }
 
+    OSType getOSType();
+
     static OSHandle getHandle() {
         return new WindowsHandle();
     }
