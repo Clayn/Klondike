@@ -1,6 +1,5 @@
 package de.clayntech.yukon.bridge;
 
-import de.clayntech.klondike.Klondike;
 import de.clayntech.klondike.log.KlondikeLoggerFactory;
 import de.clayntech.klondike.sdk.ApplicationRepository;
 import de.clayntech.klondike.sdk.KlondikeApplication;
@@ -13,7 +12,6 @@ import de.clayntech.klondike.sdk.util.Formatter;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class YukonRepository implements ApplicationRepository {
@@ -47,6 +45,7 @@ public class YukonRepository implements ApplicationRepository {
         KlondikeBridge.callKlondike("add",app.getName(),app.getExecutable().getAbsolutePath());
     }
 
+    @SuppressWarnings({"unchecked","rawtypes"})
     @Override
     public void update(KlondikeApplication app) {
         TypeConverterFactory factory=TypeConverterFactory.getFactory();

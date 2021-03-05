@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--suppress XmlHighlighting -->
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<!--suppress XmlHighlighting -->
 <fx:root type="VBox" prefWidth="400.0" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <VBox spacing="5.0">
         <Label text="Executable"/>

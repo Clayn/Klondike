@@ -5,9 +5,6 @@ import de.clayntech.klondike.sdk.param.types.Directory;
 
 import java.io.File;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class GsonDirectoryAdapter implements JsonDeserializer<Directory>, JsonSerializer<Directory> {
     final boolean simple=true;

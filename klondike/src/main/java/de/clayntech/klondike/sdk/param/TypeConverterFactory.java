@@ -2,12 +2,8 @@ package de.clayntech.klondike.sdk.param;
 
 import de.clayntech.klondike.impl.param.KlondikeConverter;
 
-import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @SuppressWarnings("unchecked")
 public class TypeConverterFactory {

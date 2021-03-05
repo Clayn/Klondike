@@ -84,6 +84,7 @@ public class CliHelperTest {
         Assertions.assertEquals("Test",step.getParameter().get(0).getValue());
     }
 
+    @SuppressWarnings("rawtypes")
     @Test
     public void testCreateStep2() throws Exception {
         String[] args=new String[]{LogStep.class.getName(),"-SP"+LogStep.MESSAGE_PARAMETER+"=Test2","-SPTest=Test"};
@@ -101,6 +102,7 @@ public class CliHelperTest {
         }
     }
 
+    @SuppressWarnings("rawtypes")
     @Test
     public void testCreateStep3() throws Exception {
         String[] args=new String[]{LogStep.class.getName(),"-SP"+LogStep.MESSAGE_PARAMETER+"=Test2","-SPTest=Test","-SPTest2=Test3","-CTest2=de.clayntech.klondike.cli.CliHelperTest"};

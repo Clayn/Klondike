@@ -40,12 +40,12 @@ public class KlondikeConverter {
     private static class StringConverter implements TypeConverter<String> {
 
         @Override
-        public String fromString(String val) throws Exception {
+        public String fromString(String val) {
             return val;
         }
 
         @Override
-        public String toString(String val) throws Exception {
+        public String toString(String val) {
             return val;
         }
     }
@@ -53,12 +53,12 @@ public class KlondikeConverter {
     private static class FileConverter implements TypeConverter<File> {
 
         @Override
-        public File fromString(String val) throws Exception {
+        public File fromString(String val) {
             return new File(val);
         }
 
         @Override
-        public String toString(File val) throws Exception {
+        public String toString(File val) {
             return val.getAbsolutePath();
         }
     }
@@ -67,12 +67,12 @@ public class KlondikeConverter {
     private static class DirectoryConverter implements TypeConverter<Directory> {
 
         @Override
-        public Directory fromString(String val) throws Exception {
+        public Directory fromString(String val) {
             return new Directory(new File(val));
         }
 
         @Override
-        public String toString(Directory val) throws Exception {
+        public String toString(Directory val) {
             return val.getDirectory().getAbsolutePath();
         }
     }

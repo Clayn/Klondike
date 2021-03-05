@@ -15,13 +15,10 @@ import de.clayntech.yukon.ui.components.EditControl;
 import de.clayntech.yukon.ui.components.StepView;
 import de.clayntech.yukon.ui.dialog.DialogBuilder;
 import javafx.beans.Observable;
-import javafx.beans.binding.Bindings;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -76,12 +73,7 @@ public class EditApplicationController implements Initializable,DataController<K
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        oldName.addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                KlondikeLoggerFactory.getLogger().debug("Old name changed from: {} to {}",s,t1);
-            }
-        });
+        oldName.addListener((observableValue, s, t1) -> KlondikeLoggerFactory.getLogger().debug("Old name changed from: {} to {}", s, t1));
         application.addListener(this::populateTree);
         appInfo.setCellFactory(new Callback<>() {
             @Override

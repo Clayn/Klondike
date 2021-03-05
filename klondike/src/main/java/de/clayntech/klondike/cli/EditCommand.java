@@ -1,13 +1,13 @@
 package de.clayntech.klondike.cli;
 
 import de.clayntech.klondike.Klondike;
-import de.clayntech.klondike.log.KlondikeLoggerFactory;
 import de.clayntech.klondike.sdk.ApplicationRepository;
 import de.clayntech.klondike.sdk.KlondikeApplication;
 import de.clayntech.klondike.sdk.exec.Step;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -32,10 +32,7 @@ public class EditCommand implements Command{
         } else if(EDIT_STEP.equals(command)) {
             int index=Integer.parseInt(args[2]);
             Step old=index<0||index>=app.getScript().getSteps().size()?null:app.getScript().getSteps().get(index);
-            List<String> stepArgs=new ArrayList<>();
-            for(int i=3;i< args.length;++i) {
-                stepArgs.add(args[i]);
-            }
+            List<String> stepArgs = new ArrayList<>(Arrays.asList(args).subList(3, args.length));
             if(stepArgs.isEmpty()) {
                 throw new IllegalArgumentException();
             }

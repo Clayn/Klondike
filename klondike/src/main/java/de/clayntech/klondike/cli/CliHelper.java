@@ -78,6 +78,7 @@ public class CliHelper {
         }
     }
 
+    @SuppressWarnings({"unchecked", "rawtypes"})
     public static Step parseStep(String[] args) throws Exception {
         if(args.length<1) {
             throw new IllegalArgumentException();
