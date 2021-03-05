@@ -2,6 +2,8 @@ module yukon {
     opens de.clayntech.yukon to javafx.graphics;
     opens de.clayntech.yukon.controller to javafx.graphics,javafx.fxml;
     opens de.clayntech.yukon.util to javafx.fxml;
+    exports de.clayntech.yukon.ui.components to javafx.fxml;
+    opens de.clayntech.yukon.ui.components to javafx.fxml;
     requires klondike;
     requires javafx.graphics;
     requires javafx.controls;

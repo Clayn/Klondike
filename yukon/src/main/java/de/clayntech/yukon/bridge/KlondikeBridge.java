@@ -1,6 +1,7 @@
 package de.clayntech.yukon.bridge;
 
 import de.clayntech.klondike.Klondike;
+import de.clayntech.klondike.log.KlondikeLoggerFactory;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -18,11 +19,12 @@ public class KlondikeBridge {
         PipedInputStream pIn=new PipedInputStream();
         PipedOutputStream pOut=new PipedOutputStream();
         BufferedReader reader;
+
+        List<String> back=new ArrayList<>();
         try {
             pIn.connect(pOut);
             System.setOut(new PrintStream(pOut));
             reader=new BufferedReader(new InputStreamReader(pIn));
-            List<String> back=new ArrayList<>();
             String in;
             new Thread(() -> {
                 Klondike.main(arguments);
@@ -41,6 +43,7 @@ public class KlondikeBridge {
             throw new RuntimeException(e);
         }finally {
             System.setOut(stream);
+            KlondikeLoggerFactory.getLogger().debug("Received: {}",back);
         }
     }
 }

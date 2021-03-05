@@ -10,4 +10,8 @@ public interface KlondikeApplication {
     String getName();
 
     File getExecutable();
+
+    void setName(String name);
+
+    void setExecutable(File executable);
 }

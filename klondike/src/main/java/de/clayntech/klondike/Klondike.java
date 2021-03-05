@@ -43,6 +43,7 @@ public class Klondike implements Callable<Integer> {
         Klondike klondike = new Klondike();
         CLI=new CommandLine(klondike);
         CLI.setUnmatchedArgumentsAllowed(true);
+        CLI.setUnmatchedOptionsArePositionalParams(true);
         int exit=CLI.execute(args);
         if(!klondike.testMode&&exit!=0) {
             System.exit(exit);

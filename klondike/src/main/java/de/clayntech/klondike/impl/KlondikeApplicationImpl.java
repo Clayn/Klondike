@@ -27,7 +27,7 @@ public class KlondikeApplicationImpl implements KlondikeApplication {
         this.executable = executable;
     }
 
-    public void setScript(ExecutionScriptImpl script) {
+    void setScript(ExecutionScriptImpl script) {
         this.script = script;
     }
 

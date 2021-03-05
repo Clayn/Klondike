@@ -1,11 +1,14 @@
 package de.clayntech.yukon.controller;
 
-import de.clayntech.yukon.Yukon;
-import de.clayntech.yukon.bridge.KlondikeBridge;
+import de.clayntech.klondike.impl.KlondikeApplicationImpl;
+import de.clayntech.klondike.sdk.ApplicationRepository;
+import de.clayntech.klondike.sdk.KlondikeApplication;
+import de.clayntech.yukon.action.ActionManager;
+import de.clayntech.yukon.bridge.YukonRepository;
+import de.clayntech.yukon.ui.components.ApplicationInformationController;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TextField;
-import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.net.URL;
@@ -14,39 +17,30 @@ import java.util.ResourceBundle;
 public class NewApplicationController implements Initializable {
 
     @FXML
-    private TextField nameField;
-
-    @FXML
-    private TextField pathField;
+    private ApplicationInformationController controller;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        controller.setOnSave(this::onSave);
+        controller.setOnCancel(this::onCancel);
     }
 
     @FXML
-    private void onSelectFile() {
-        String current=pathField.getText();
-        File f=current.isBlank()?null:new File(current);
-        boolean setDirectory=f!=null&&(f.exists()||f.getParentFile()!=null&&f.getParentFile().exists());
-        FileChooser chooser=new FileChooser();
-        if(setDirectory) {
-            chooser.setInitialDirectory(f.getParentFile());
-            chooser.setInitialFileName(f.getName());
+    private void onSave(ActionEvent evt) {
+        KlondikeApplication app=new KlondikeApplicationImpl();
+        app.setName(controller.getName());
+        app.setExecutable(new File(controller.getPath()));
+        ApplicationRepository repository=new YukonRepository();
+        try {
+            repository.register(app);
+            ActionManager.getInstance().execute(ActionManager.NativeAction.RELOAD_APPLICATIONS);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        File selected= chooser.showOpenDialog(Yukon.getYukonWindow());
-        if(selected!=null) {
-            pathField.setText(selected.getAbsolutePath());
-        }
     }
 
     @FXML
-    private void onSave() {
-        KlondikeBridge.callKlondike("add",nameField.getText(),pathField.getText());
-    }
-
-    @FXML
-    private void onCancel() {
-        nameField.getParent().getScene().getWindow().hide();
+    private void onCancel(ActionEvent evt) {
+        controller.getWindow().hide();
     }
 }

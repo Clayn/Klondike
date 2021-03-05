@@ -125,4 +125,22 @@ public class KlondikeApplicationRepository implements ApplicationRepository {
         }
         writeApplicationFile(app);
     }
+
+    @Override
+    public void update(KlondikeApplication app, String newName) throws IOException {
+        boolean exists=getApplication(app.getName())!=null;
+        boolean nameUsed=getApplication(newName)!=null;
+        if(nameUsed) {
+            throw new NameInUseException();
+        }
+        String oldName=app.getName();
+        app.setName(newName);
+        if(!exists) {
+            register(app);
+            return;
+        }else {
+            Files.deleteIfExists(directory.resolve(oldName+".kapp"));
+        }
+        writeApplicationFile(app);
+    }
 }

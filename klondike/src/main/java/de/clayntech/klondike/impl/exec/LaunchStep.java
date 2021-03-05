@@ -8,12 +8,13 @@ import de.clayntech.klondike.sdk.exec.Step;
 import de.clayntech.klondike.sdk.exec.StepDefinition;
 import de.clayntech.klondike.sdk.os.OSHandle;
 import de.clayntech.klondike.sdk.param.ParameterDefinition;
+import de.clayntech.klondike.sdk.param.types.Directory;
 
 import java.io.File;
 import java.io.IOException;
 
 @StepDefinition(name = "klondike.impl.launch",translator = KlondikeTranslator.class,parameter = {
-        @ParameterDefinition(type= File.class, name ="launch.workingdir",optional = false)
+        @ParameterDefinition(type= Directory.class, name ="launch.workingdir",optional = false)
 })
 public class LaunchStep extends Step {
     @Override

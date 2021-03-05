@@ -17,4 +17,7 @@ module klondike {
     opens de.clayntech.klondike.util to info.picocli;
     exports de.clayntech.klondike.sdk.util;
     exports de.clayntech.klondike.log;
+    exports de.clayntech.klondike.impl.i18n to yukon;
+    exports de.clayntech.klondike.impl to yukon;
+    exports de.clayntech.klondike.sdk.param.types;
 }
