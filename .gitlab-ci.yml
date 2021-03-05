@@ -65,6 +65,9 @@ deploy:jdk11:
     - master
   artifacts:
     when: always
+    paths:
+      - 'klondike/dist/Klondike.jar'
+      - 'yukon/dist/Yukon.jar'
     reports:
       junit:
         - '**/target/surefire-reports/TEST-*.xml'

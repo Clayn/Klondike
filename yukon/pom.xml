@@ -109,7 +109,7 @@
                             <transformers>
                                 <transformer implementation=
                                                      "org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>de.clayntech.chriselix.Launcher</mainClass>
+                                    <mainClass>de.clayntech.yukon.Launcher</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
