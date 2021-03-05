@@ -31,73 +31,18 @@ public class AddStepCommand implements Command{
         ApplicationRepository repository=klondike.getRepository();
         KlondikeApplication app=repository.getApplication(args[0]);
         if(app==null) {
-
             return null;
         }
-        Class<? extends Step> stepClass= (Class<? extends Step>) Class.forName(args[1]);
-        Map<String,String> parameter=separateParameter("-SP",args);
-        Map<String,String> types=separateParameter("-C",args);
-        Step step=stepClass.getConstructor().newInstance();
-        Set<ParameterDefinition> definitions=new HashSet<>(Arrays.asList(step.getClass().getAnnotation(StepDefinition.class).parameter()));
-        TypeConverterFactory factory=TypeConverterFactory.getFactory();
-        Set<String> handledParameter=new HashSet<>();
-        for(ParameterDefinition def:definitions) {
-            StepParameter stepParameter=null;
-            if(!def.optional()&&parameter.containsKey(def.name())) {
-                throw new RuntimeException();
-            }
-            TypeConverter<?> converter=factory.getConverter(def.type());
-            if(!def.optional()&&converter==null) {
-                throw new RuntimeException();
-            }
-            if(converter!=null) {
-                stepParameter=new StepParameter<>(def.name(),def.type());
-                stepParameter.setOptional(def.optional());
-                Object val=parameter.containsKey(def.name())?converter.fromString(parameter.get(def.name())):null;
-                stepParameter.setValue(val);
-            }
-            if(stepParameter!=null) {
-                step.getParameter().add(stepParameter);
-                handledParameter.add(def.name());
-            }
+        List<String> stepArgs=new ArrayList<>(args.length-1);
+        for(int i=1;i<args.length;++i) {
+            stepArgs.add(args[i]);
         }
-        for(Map.Entry<String,String> entry:parameter.entrySet()) {
-
-            String name=entry.getKey();
-            if(handledParameter.contains(name)) {
-                continue;
-            }
-            String value=entry.getValue();
-            Class<?> parType=types.containsKey(name)?Class.forName(types.get(name)):String.class;
-            StepParameter stepParameter;
-            TypeConverter<?> converter=factory.getConverter(parType);
-            if(converter==null) {
-                continue;
-            }
-            stepParameter=new StepParameter<>(name,parType);
-            stepParameter.setOptional(true);
-            Object val=parameter.containsKey(name)?converter.fromString(value):null;
-            stepParameter.setValue(val);
-            step.getParameter().add(stepParameter);
-            handledParameter.add(name);
-        }
+        Step step=CliHelper.parseStep(stepArgs.toArray(new String[0]));
         app.getScript().getSteps().add(step);
         repository.update(app);
         return null;
     }
 
-    private Map<String,String> separateParameter(String start,String... args) {
-        Map<String,String> map=new HashMap<>();
-        for(String arg:args) {
-            if(arg.startsWith(start)) {
-                String use=arg.substring(start.length());
-                int index=use.indexOf("=");
-                String key=use.substring(0,index);
-                String value=use.substring(index+1);
-                map.put(key,value);
-            }
-        }
-        return map;
-    }
+
 
 }

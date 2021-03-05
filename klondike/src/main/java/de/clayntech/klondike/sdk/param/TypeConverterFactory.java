@@ -16,26 +16,18 @@ public class TypeConverterFactory {
     private final Map<Class<?>,TypeConverter<?>> converter=new HashMap<>();
 
     {
-        register(new KlondikeConverter());
+        for(Object conv:KlondikeConverter.getConverterClasses()) {
+            register(conv);
+        }
     }
 
 
 
     @SuppressWarnings("UnusedReturnValue")
     public TypeConverterFactory register(Object converter) {
-        List<Method> converterMethods= Arrays.stream(converter.getClass().getDeclaredMethods())
-                .filter((m)->m.isAnnotationPresent(Converter.class))
-                .collect(Collectors.toList());
-        for(Method m:converterMethods) {
-            if(m.getParameterCount()!=1&&!m.getParameterTypes()[0].equals(String.class)) {
-                continue;
-            }
-            Class<?> type=m.getReturnType();
-            if(this.converter.containsKey(type)) {
-                continue;
-            }
-            TypeConverter<?> conv= (TypeConverter<Object>) val -> m.invoke(converter, val);
-            this.converter.put(type,conv);
+        Converter conv=converter.getClass().getAnnotation(Converter.class);
+        if(conv!=null&&converter instanceof TypeConverter) {
+            this.converter.put(conv.value(), (TypeConverter<?>) converter);
         }
         return this;
     }

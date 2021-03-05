@@ -1,23 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import de.clayntech.yukon.ui.components.ApplicationInformationController?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
 <BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.clayntech.yukon.controller.NewApplicationController">
    <center>
-      <VBox prefWidth="400.0" spacing="10.0">
-         <VBox spacing="5.0">
-            <Label text="Executable"/>
-            <HBox spacing="5.0" VBox.vgrow="ALWAYS">
-               <TextField fx:id="pathField" HBox.hgrow="ALWAYS"/>
-               <Button mnemonicParsing="false" text="Select" onAction="#onSelectFile"/>
-            </HBox>
-         </VBox>
-         <VBox spacing="5.0">
-            <Label text="Name"/>
-            <TextField fx:id="nameField"/>
-         </VBox>
-      </VBox>
+        <ApplicationInformationController fx:id="controller" />
    </center>
    <bottom>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">

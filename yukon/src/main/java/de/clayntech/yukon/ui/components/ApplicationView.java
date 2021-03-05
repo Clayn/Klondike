@@ -17,7 +17,6 @@ public class ApplicationView extends Control {
     private final DoubleProperty viewHeight=new SimpleDoubleProperty(64);
     private final ObjectProperty<EventHandler<ActionEvent>> onAction=new SimpleObjectProperty<>();
 
-
     public EventHandler<ActionEvent> getOnAction() {
         return onAction.get();
     }

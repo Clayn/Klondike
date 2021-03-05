@@ -1,34 +1,83 @@
 package de.clayntech.klondike.impl.param;
 
 import de.clayntech.klondike.sdk.param.Converter;
+import de.clayntech.klondike.sdk.param.TypeConverter;
+import de.clayntech.klondike.sdk.param.types.Directory;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.Arrays;
+import java.util.List;
 
 public class KlondikeConverter {
 
-    @Converter(String.class)
+
     public String parseStringRaw(String str) {
         return str;
     }
 
-    @Converter(Integer.class)
+    //@Converter(Integer.class)
     public Integer parseStringInteger(String str) {
         return parseStringInt(str);
     }
 
-    @Converter(int.class)
+    //@Converter(int.class)
     public int parseStringInt(String str) {
         return Integer.parseInt(str);
     }
 
-    @Converter(File.class)
+
     public File parseStringFile(String str) {
         return new File(str);
     }
 
-    @Converter(Path.class)
+    //@Converter(Path.class)
     public Path parseStringPath(String str) {
         return Path.of(str);
+    }
+
+    @Converter(String.class)
+    private static class StringConverter implements TypeConverter<String> {
+
+        @Override
+        public String fromString(String val) throws Exception {
+            return val;
+        }
+
+        @Override
+        public String toString(String val) throws Exception {
+            return val;
+        }
+    }
+    @Converter(File.class)
+    private static class FileConverter implements TypeConverter<File> {
+
+        @Override
+        public File fromString(String val) throws Exception {
+            return new File(val);
+        }
+
+        @Override
+        public String toString(File val) throws Exception {
+            return val.getAbsolutePath();
+        }
+    }
+
+    @Converter(Directory.class)
+    private static class DirectoryConverter implements TypeConverter<Directory> {
+
+        @Override
+        public Directory fromString(String val) throws Exception {
+            return new Directory(new File(val));
+        }
+
+        @Override
+        public String toString(Directory val) throws Exception {
+            return val.getDirectory().getAbsolutePath();
+        }
+    }
+
+    public static List<Object> getConverterClasses() {
+        return Arrays.asList(new StringConverter(),new FileConverter(),new DirectoryConverter());
     }
 }

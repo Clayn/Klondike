@@ -4,13 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import de.clayntech.klondike.impl.KlondikeApplicationImpl;
-import de.clayntech.klondike.impl.exec.GsonFileAdapter;
-import de.clayntech.klondike.impl.exec.GsonPathAdapter;
-import de.clayntech.klondike.impl.exec.GsonStepAdapter;
-import de.clayntech.klondike.impl.exec.GsonStepParameterAdapter;
+import de.clayntech.klondike.impl.exec.*;
 import de.clayntech.klondike.sdk.KlondikeApplication;
 import de.clayntech.klondike.sdk.exec.Step;
 import de.clayntech.klondike.sdk.param.StepParameter;
+import de.clayntech.klondike.sdk.param.types.Directory;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -23,6 +21,7 @@ public class ApplicationFormatter implements Formatter<KlondikeApplication> {
             .registerTypeAdapter(new TypeToken<Step>(){}.getType(),new GsonStepAdapter())
             .registerTypeAdapter(new TypeToken<File>(){}.getType(),new GsonFileAdapter())
             .registerTypeAdapter(new TypeToken<Path>(){}.getType(),new GsonPathAdapter())
+            .registerTypeAdapter(new TypeToken<Directory>(){}.getType(),new GsonDirectoryAdapter())
             .disableHtmlEscaping()
                 .create();
 
