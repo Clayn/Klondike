@@ -32,8 +32,8 @@ cache:
 .verify: &verify
   stage: test
   script:
-    - 'mvn -f klondike/pom.xml $MAVEN_CLI_OPTS verify test -s .m2/settings.xml'
-    - 'mvn -f yukon/pom.xml $MAVEN_CLI_OPTS verify test -s .m2/settings.xml'
+    - 'mvn -f klondike/pom.xml $MAVEN_CLI_OPTS verify install'
+    - 'mvn -f yukon/pom.xml $MAVEN_CLI_OPTS verify install'
   except:
     - master
   artifacts:
