@@ -48,10 +48,8 @@ node {
         stage('Reporting') {
             if (isUnix()) {
                 sh "'${mvnHome}/bin/mvn' -DskipTests site"
-                jacoco()
             } else {
                 bat(/"${mvnHome}\bin\mvn" -DskipTests site/)
-                jacoco()
             }
         }
 
@@ -95,10 +93,10 @@ node {
         stage('Reporting') {
             if (isUnix()) {
                 sh "'${mvnHome}/bin/mvn' -DskipTests site"
-                jacoco()
+                jacoco sourceInclusionPattern: '**/de.clayntech*/*.java,**/*.groovy,**/*.kt,**/*.kts'
             } else {
                 bat(/"${mvnHome}\bin\mvn" -DskipTests site/)
-                jacoco()
+                jacoco sourceInclusionPattern: '**/de.clayntech*/*.java,**/*.groovy,**/*.kt,**/*.kts'
             }
         }
 
