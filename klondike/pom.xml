@@ -8,22 +8,38 @@
     <artifactId>klondike</artifactId>
     <version>0.1</version>
 
-    <repositories>
-        <repository>
-            <id>gitlab-maven</id>
-            <url>https://gitlab.byte-welt.net/api/v4/projects/118/packages/maven</url>
-        </repository>
-    </repositories>
-    <distributionManagement>
-        <repository>
-            <id>gitlab-maven</id>
-            <url>https://gitlab.byte-welt.net/api/v4/projects/118/packages/maven</url>
-        </repository>
-        <snapshotRepository>
-            <id>gitlab-maven</id>
-            <url>https://gitlab.byte-welt.net/api/v4/projects/118/packages/maven</url>
-        </snapshotRepository>
-    </distributionManagement>
+    <profiles>
+        <profile>
+            <id>jenkins</id>
+            <distributionManagement>
+                <repository>
+                    <id>clayn-nexus</id>
+                    <name>Clayns Nexus Repository</name>
+                    <url>http://www.clayncraft.de:8081/repository/clayn/</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+        <profile>
+            <id>gitlab</id>
+            <repositories>
+                <repository>
+                    <id>gitlab-maven</id>
+                    <url>https://gitlab.byte-welt.net/api/v4/projects/118/packages/maven</url>
+                </repository>
+            </repositories>
+            <distributionManagement>
+                <repository>
+                    <id>gitlab-maven</id>
+                    <url>https://gitlab.byte-welt.net/api/v4/projects/118/packages/maven</url>
+                </repository>
+                <snapshotRepository>
+                    <id>gitlab-maven</id>
+                    <url>https://gitlab.byte-welt.net/api/v4/projects/118/packages/maven</url>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
+    </profiles>
+
 
 
     <properties>

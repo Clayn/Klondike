@@ -12,6 +12,16 @@
 
     <profiles>
         <profile>
+            <id>jenkins</id>
+            <distributionManagement>
+                <repository>
+                    <id>clayn-nexus</id>
+                    <name>Clayns Nexus Repository</name>
+                    <url>http://www.clayncraft.de:8081/repository/clayn/</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+        <profile>
             <id>gitlab</id>
             <repositories>
                 <repository>
@@ -28,25 +38,6 @@
                     <id>gitlab-maven</id>
                     <url>https://gitlab.byte-welt.net/api/v4/projects/118/packages/maven</url>
                 </snapshotRepository>
-            </distributionManagement>
-        </profile>
-        <profile>
-            <id>github</id>
-            <repositories>
-                <repository>
-                    <id>github-maven</id>
-                    <url>https://maven.pkg.github.com/OWNER/*</url>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
-                </repository>
-            </repositories>
-            <distributionManagement>
-                <repository>
-                    <id>github</id>
-                    <name>GitHub OWNER Apache Maven Packages</name>
-                    <url>https://maven.pkg.github.com/Clayn/klondike</url>
-                </repository>
             </distributionManagement>
         </profile>
     </profiles>

@@ -82,7 +82,7 @@ deploy:jdk11:
     - 'mvn -f klondike/pom.xml $MAVEN_CLI_OPTS test -s .m2/settings.xml -P gitlab'
     - 'mvn -f yukon/pom.xml $MAVEN_CLI_OPTS test -s .m2/settings.xml -P gitlab'
     - 'mvn -f klondike/pom.xml $MAVEN_CLI_OPTS -DskipTests install deploy -s .m2/settings.xml -P gitlab'
-    - 'mvn -f yukon/pom.xml $MAVEN_CLI_OPTS -DskipTests install deploy -s .m2/settings.xml -P gitlab'
+    - 'mvn -f yukon/pom.xml $MAVEN_CLI_OPTS -DskipTests install deploy -s .m2/settings.xml -P gitlab -P gitlab'
   only:
     - tags
   artifacts:

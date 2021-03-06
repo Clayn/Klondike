@@ -59,9 +59,9 @@ node {
 
 		stage('Deployment') {
 			if (isUnix()) {
-                //sh "'${mvnHome}/bin/mvn' -DskipTests deploy"
+                sh "'${mvnHome}/bin/mvn' -P jenkins -DskipTests deploy"
             } else {
-                //bat(/"${mvnHome}\bin\mvn" -DskipTests deploy/)
+                bat(/"${mvnHome}\bin\mvn" -P jenkins -DskipTests deploy/)
             }
         }
    }
@@ -104,9 +104,9 @@ node {
 
         stage('Deployment') {
             if (isUnix()) {
-                //sh "'${mvnHome}/bin/mvn' -DskipTests deploy"
+                sh "'${mvnHome}/bin/mvn' -P jenkins -DskipTests deploy "
             } else {
-                //bat(/"${mvnHome}\bin\mvn" -DskipTests deploy/)
+                bat(/"${mvnHome}\bin\mvn" -P jenkins -DskipTests deploy /)
             }
         }
    }
