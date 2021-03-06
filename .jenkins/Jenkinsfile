@@ -1,8 +1,8 @@
 node {
    def mvnHome
-    def jdk = tool name: 'JDK 14'
-    def jdk8=tool name:'JDK 1.8'
-    env.JAVA_HOME = "${jdk}"
+   def jdk = tool name: 'JDK 14'
+   def jdk8=tool name:'JDK 1.8'
+   env.JAVA_HOME = "${jdk}"
    stage('Preparation') {
         checkout scm
         mvnHome = tool 'Maven'
@@ -20,7 +20,7 @@ node {
                 bat(/"${mvnHome}\bin\mvn" clean/)
             }
         }
-    }
+   }
    dir('klondike') {
 
 		stage('Build') {
@@ -104,11 +104,10 @@ node {
 
         stage('Deployment') {
             if (isUnix()) {
-                   //sh "'${mvnHome}/bin/mvn' -DskipTests deploy"
-               } else {
-                   //bat(/"${mvnHome}\bin\mvn" -DskipTests deploy/)
-               }
-           }
+                //sh "'${mvnHome}/bin/mvn' -DskipTests deploy"
+            } else {
+                //bat(/"${mvnHome}\bin\mvn" -DskipTests deploy/)
+            }
         }
    }
 }
