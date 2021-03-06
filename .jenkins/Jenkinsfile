@@ -47,9 +47,11 @@ node {
 
         stage('Reporting') {
             if (isUnix()) {
-                //sh "'${mvnHome}/bin/mvn' -DskipTests site"
+                sh "'${mvnHome}/bin/mvn' -DskipTests site"
+                jacoco()
             } else {
-                //bat(/"${mvnHome}\bin\mvn" -DskipTests site/)
+                bat(/"${mvnHome}\bin\mvn" -DskipTests site/)
+                jacoco()
             }
         }
 
@@ -92,9 +94,11 @@ node {
 
         stage('Reporting') {
             if (isUnix()) {
-                //sh "'${mvnHome}/bin/mvn' -DskipTests site"
+                sh "'${mvnHome}/bin/mvn' -DskipTests site"
+                jacoco()
             } else {
-                //bat(/"${mvnHome}\bin\mvn" -DskipTests site/)
+                bat(/"${mvnHome}\bin\mvn" -DskipTests site/)
+                jacoco()
             }
         }
 
