@@ -4,7 +4,7 @@ import picocli.CommandLine;
 
 import java.io.PrintStream;
 
-public class KlondikeVersion implements CommandLine.IVersionProvider {
+public class KlondikeVersion extends MavenizedVersion implements CommandLine.IVersionProvider{
 
     private static final String VERSION_STRING="  _  __ _                    _  _  _               ___    __  \n" +
             " | |/ /| |                  | |(_)| |             / _ \\  /_ | \n" +
@@ -21,5 +21,14 @@ public class KlondikeVersion implements CommandLine.IVersionProvider {
 
     public static void printHello(PrintStream ps) {
         ps.println(VERSION_STRING);
+    }
+
+    public static Version getInstance() {
+        return new KlondikeVersion();
+    }
+
+    @Override
+    protected String getPropertiesFileName() {
+        return "klondike_app.properties";
     }
 }

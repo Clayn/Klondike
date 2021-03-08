@@ -2,6 +2,7 @@
   <configuration default="false" name="Launcher" type="Application" factoryName="Application" nameIsGenerated="true">
     <option name="MAIN_CLASS_NAME" value="de.clayntech.yukon.Launcher" />
     <module name="yukon" />
+    <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/yukon" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="de.clayntech.yukon.*" />
