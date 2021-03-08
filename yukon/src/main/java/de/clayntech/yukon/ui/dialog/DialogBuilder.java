@@ -1,11 +1,21 @@
 package de.clayntech.yukon.ui.dialog;
 
+import de.clayntech.klondike.util.KlondikeVersion;
+import de.clayntech.klondike.util.Version;
+import de.clayntech.yukon.ui.YukonImage;
+import de.clayntech.yukon.util.ImageHelper;
+import de.clayntech.yukon.util.YukonVersion;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Window;
+import jfxtras.styles.jmetro.JMetro;
+import jfxtras.styles.jmetro.Style;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -97,14 +107,40 @@ public class DialogBuilder {
         al.setContentText(content);
         al.initModality(Modality.APPLICATION_MODAL);
         al.initOwner(owner);
-        al.getButtonTypes().clear();
+        if(!buttons.isEmpty()) {
+            al.getButtonTypes().clear();
+            al.getButtonTypes().addAll(buttons);
+        }
         if(graphic!=null) {
             al.setGraphic(graphic);
         }
         if(graphicContent!=null) {
             al.getDialogPane().setContent(graphicContent);
         }
-        al.getButtonTypes().addAll(buttons);
+        JMetro metro=new JMetro(Style.DARK);
+        metro.setAutomaticallyColorPanes(true);
+        metro.setParent(al.getDialogPane());
         return al;
+    }
+
+    public static Alert getAboutDialog() {
+        Node content=null;
+        VBox box=new VBox(5);
+        Version klondikeVersion=new KlondikeVersion();
+        Version yukonVersion=new YukonVersion();
+
+        Label klondike=new Label(String.format("Klondike: %s",klondikeVersion.getApplicationVersion()));
+        Label yukon=new Label(String.format("Yukon: %s",yukonVersion.getApplicationVersion()));
+        Label java=new Label(String.format("Java: %s",System.getProperty("java.version")));
+
+        box.getChildren().addAll(klondike,yukon,java);
+
+        content=box;
+
+        return DialogBuilder.prepare(Alert.AlertType.INFORMATION)
+                .withTitle("About")
+                .withContent(content)
+                .withGraphic(new ImageView(ImageHelper.loadImage(YukonImage.LOGO)))
+                .build();
     }
 }

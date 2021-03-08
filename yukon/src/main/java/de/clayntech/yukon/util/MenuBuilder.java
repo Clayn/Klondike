@@ -3,7 +3,10 @@ package de.clayntech.yukon.util;
 import de.clayntech.yukon.Yukon;
 import de.clayntech.yukon.ui.FXMLFile;
 import de.clayntech.yukon.ui.YukonImage;
+import de.clayntech.yukon.ui.dialog.DialogBuilder;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -35,8 +38,18 @@ public class MenuBuilder {
         });
         MenuItem exit=new MenuItem("Exit");
         exit.setOnAction((evt)-> Platform.exit());
+
+        Menu help=new Menu("?");
+        MenuItem about=new MenuItem("About");
+        about.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                DialogBuilder.getAboutDialog().show();
+            }
+        });
+        help.getItems().addAll(about);
         file.getItems().addAll(newApp,exit);
-        bar.getMenus().addAll(file);
+        bar.getMenus().addAll(file,help);
         return bar;
     }
 }
