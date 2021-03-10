@@ -2,6 +2,7 @@ package de.clayntech.yukon.ui.dialog;
 
 import de.clayntech.klondike.util.KlondikeVersion;
 import de.clayntech.klondike.util.Version;
+import de.clayntech.yukon.Yukon;
 import de.clayntech.yukon.ui.YukonImage;
 import de.clayntech.yukon.util.ImageHelper;
 import de.clayntech.yukon.util.YukonVersion;
@@ -40,11 +41,15 @@ public class DialogBuilder {
             types.addAll(Arrays.asList(options));
         }
 
-        public static ButtonOption createYesNoCancelOption(String textYes, String textNo, String textCancel) {
-            ButtonType yes=new ButtonType(textYes, ButtonBar.ButtonData.OK_DONE);
-            ButtonType no=new ButtonType(textNo, ButtonBar.ButtonData.NO);
-            ButtonType cancel=new ButtonType(textCancel, ButtonBar.ButtonData.CANCEL_CLOSE);
+        public static ButtonOption createYesNoCancelOption() {
+            ButtonType yes=createType("button.yes", ButtonBar.ButtonData.YES);
+            ButtonType no=createType("button.no", ButtonBar.ButtonData.NO);
+            ButtonType cancel=createType("button.cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
             return new ButtonOption(yes,no,cancel);
+        }
+
+        public static ButtonType createType(String translationKey, ButtonBar.ButtonData data) {
+            return new ButtonType(Yukon.getTranslator().translate(translationKey).get(),data);
         }
     }
 
@@ -124,7 +129,7 @@ public class DialogBuilder {
     }
 
     public static Alert getAboutDialog() {
-        Node content=null;
+        Node content;
         VBox box=new VBox(5);
         Version klondikeVersion=new KlondikeVersion();
         Version yukonVersion=new YukonVersion();
@@ -141,6 +146,7 @@ public class DialogBuilder {
                 .withTitle("About")
                 .withContent(content)
                 .withGraphic(new ImageView(ImageHelper.loadImage(YukonImage.LOGO)))
+                .with(ButtonOption.createType("button.ok", ButtonBar.ButtonData.OK_DONE))
                 .build();
     }
 }

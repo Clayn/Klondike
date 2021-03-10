@@ -1,6 +1,5 @@
 package de.clayntech.yukon.controller;
 
-import de.clayntech.klondike.log.KlondikeLoggerFactory;
 import de.clayntech.klondike.sdk.ApplicationRepository;
 import de.clayntech.klondike.sdk.KlondikeApplication;
 import de.clayntech.klondike.sdk.exec.Step;
@@ -27,7 +26,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
 
 import java.net.URL;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
 public class EditApplicationController implements Initializable,DataController<KlondikeApplication> {
     @FXML
@@ -73,7 +75,6 @@ public class EditApplicationController implements Initializable,DataController<K
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        oldName.addListener((observableValue, s, t1) -> KlondikeLoggerFactory.getLogger().debug("Old name changed from: {} to {}", s, t1));
         application.addListener(this::populateTree);
         appInfo.setCellFactory(new Callback<>() {
             @Override
@@ -96,7 +97,7 @@ public class EditApplicationController implements Initializable,DataController<K
                                 throw new RuntimeException();
                             }
                             Translator translator = YukonTranslationHelper.getTranslator(step);
-                            String stepName = translator == null ? def.name() : translator.translate(def.name(), Locale.ROOT);
+                            String stepName = translator == null ? def.name() : translator.translate(def.name(), Yukon.getTranslator().getLocale());
                             setText(stepName);
                         }
                     }
@@ -119,12 +120,15 @@ public class EditApplicationController implements Initializable,DataController<K
                     if (!cachedData.containsKey(value)) {
                         cachedData.put(value, controller);
                     }
+
+                    Yukon.getTranslator().applyTranslation(controller);
                     content.setCenter(controller);
                 } else if (value instanceof Step) {
                     EditControl<?> control = buildStepNode((Step) value);
                     if (!cachedData.containsKey(value)) {
                         cachedData.put(value, control);
                     }
+                    Yukon.getTranslator().applyTranslation(control);
                     content.setCenter(control);
                 }
                 if (!cachedNodes.containsKey(value)) {
@@ -193,9 +197,9 @@ public class EditApplicationController implements Initializable,DataController<K
     private void onCancel(boolean check) {
         if(check&&hasChanges()) {
             Optional<ButtonType> type= DialogBuilder.prepare(Alert.AlertType.CONFIRMATION)
-                    .withTitle("Unsaved Changes")
-                    .withContent("Do you want to save your changes?")
-                    .with(DialogBuilder.ButtonOption.createYesNoCancelOption("Yes","No","Cancel"))
+                    .withTitle(Yukon.getTranslator().translate("message.changes.title").get())
+                    .withContent(Yukon.getTranslator().translate("message.changes").get())
+                    .with(DialogBuilder.ButtonOption.createYesNoCancelOption())
                     .with(Yukon.getYukonWindow())
                     .build().showAndWait();
             if(type.isPresent()) {

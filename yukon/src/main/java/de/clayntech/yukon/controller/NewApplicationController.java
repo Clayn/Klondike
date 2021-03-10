@@ -17,19 +17,18 @@ import java.util.ResourceBundle;
 public class NewApplicationController implements Initializable {
 
     @FXML
-    private ApplicationInformationController controller;
-
+    private ApplicationInformationController center;
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        controller.setOnSave(this::onSave);
-        controller.setOnCancel(this::onCancel);
+        center.setOnSave(this::onSave);
+        center.setOnCancel(this::onCancel);
     }
 
     @FXML
     private void onSave(ActionEvent evt) {
         KlondikeApplication app=new KlondikeApplicationImpl();
-        app.setName(controller.getName());
-        app.setExecutable(new File(controller.getPath()));
+        app.setName(center.getName());
+        app.setExecutable(new File(center.getPath()));
         ApplicationRepository repository=new YukonRepository();
         try {
             repository.register(app);
@@ -41,6 +40,7 @@ public class NewApplicationController implements Initializable {
 
     @FXML
     private void onCancel(ActionEvent evt) {
-        controller.getWindow().hide();
+        center.getWindow().hide();
     }
+
 }

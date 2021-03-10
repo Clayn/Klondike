@@ -24,7 +24,6 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.function.Supplier;
 
 @SuppressWarnings("unchecked")
@@ -60,11 +59,11 @@ public class StepViewSkin extends SkinBase<StepView> {
     private Node buildParameterNode(ParameterDefinition definition, Translator translator) {
         Class<?> type=definition.type();
         if(String.class.equals(type)) {
-            return buildStringNode(definition,translator.translate(definition.name(),Locale.ROOT));
+            return buildStringNode(definition,translator.translate(definition.name(), Yukon.getTranslator().getLocale()));
         } else if(File.class.equals(type)) {
-            return buildFileNode(definition,translator.translate(definition.name(),Locale.ROOT));
+            return buildFileNode(definition,translator.translate(definition.name(),Yukon.getTranslator().getLocale()));
         }else if(Directory.class.equals(type)) {
-            return buildDirectoryNode(definition,translator.translate(definition.name(),Locale.ROOT));
+            return buildDirectoryNode(definition,translator.translate(definition.name(),Yukon.getTranslator().getLocale()));
         }
         return null;
     }
@@ -101,7 +100,8 @@ public class StepViewSkin extends SkinBase<StepView> {
         });
         changeChecks.add(() -> !field.getText().equals(String.valueOf(field.getUserData())));
         HBox.setHgrow(field, Priority.ALWAYS);
-        Button b=new Button("Select");
+        Button b=new Button();
+        b.textProperty().bind(Yukon.getTranslator().translate("button.select"));
         b.setOnAction(actionEvent -> {
             String current = field.getText();
             File f = current.isBlank() ? null : new File(current);

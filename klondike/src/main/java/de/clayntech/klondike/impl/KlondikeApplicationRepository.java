@@ -9,13 +9,13 @@ import de.clayntech.klondike.sdk.err.NameInUseException;
 import de.clayntech.klondike.sdk.evt.Events;
 import de.clayntech.klondike.sdk.exec.Step;
 import de.clayntech.klondike.sdk.param.StepParameter;
+import de.clayntech.klondike.sdk.param.types.Directory;
 import de.clayntech.klondike.sdk.util.ApplicationFormatter;
 import de.clayntech.klondike.sdk.util.Formatter;
 import org.slf4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
 import java.util.ArrayList;
@@ -97,8 +97,8 @@ public class KlondikeApplicationRepository implements ApplicationRepository {
         }
         if(!launchFound) {
             Step launchStep=new LaunchStep();
-            StepParameter<File> workingDir=new StepParameter<>("launch.workingdir",File.class);
-            workingDir.setValue(app.getExecutable().getParentFile());
+            StepParameter<Directory> workingDir=new StepParameter<>("launch.workingdir", Directory.class);
+            workingDir.setValue(new Directory(app.getExecutable().getParentFile()));
             launchStep.getParameter().add(workingDir);
             Step preLogStep=new LogStep();
             preLogStep.getTrigger().addAll(Arrays.asList(Events.POST_EXECUTION,Events.PRE_EXECUTION));
