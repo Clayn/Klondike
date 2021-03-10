@@ -6,13 +6,13 @@
 <?import javafx.scene.layout.BorderPane?>
 <BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.clayntech.yukon.controller.NewApplicationController">
    <center>
-        <ApplicationInformationController fx:id="controller" />
+        <ApplicationInformationController fx:id="center" />
    </center>
    <bottom>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <buttons>
-            <Button cancelButton="true" mnemonicParsing="false" onAction="#onCancel" text="Cancel" ButtonBar.buttonData="CANCEL_CLOSE" />
-          <Button defaultButton="true" mnemonicParsing="false" text="Save" ButtonBar.buttonData="OK_DONE" onAction="#onSave"/>
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#onCancel" text="§button.cancel" ButtonBar.buttonData="CANCEL_CLOSE" />
+          <Button defaultButton="true" mnemonicParsing="false" text="§button.save" ButtonBar.buttonData="OK_DONE" onAction="#onSave"/>
         </buttons>
       </ButtonBar>
    </bottom>

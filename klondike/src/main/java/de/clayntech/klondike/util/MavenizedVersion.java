@@ -4,7 +4,6 @@ import de.clayntech.klondike.log.KlondikeLoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Locale;
 import java.util.Properties;
 
 public abstract class MavenizedVersion implements Version{

@@ -56,7 +56,8 @@ public class ApplicationViewSkin extends SkinBase<ApplicationView> {
         b.onActionProperty().bind(applicationView.onActionProperty());
         b.getStyleClass().add("application");
         b.contextMenuProperty().bind(Bindings.createObjectBinding((()->applicationView.getApplication()==null?null:menu),applicationView.applicationProperty()));
-        MenuItem openEdit=new MenuItem("Edit");
+        MenuItem openEdit=new MenuItem();
+        openEdit.textProperty().bind(Yukon.getTranslator().translate("menu.edit"));
         openEdit.setOnAction(actionEvent -> {
             try {
                 LoadedFXML loaded = UILoader.prepare(FXMLFile.EDIT_DIALOG)
@@ -69,14 +70,16 @@ public class ApplicationViewSkin extends SkinBase<ApplicationView> {
                 Stage st = new Stage();
                 st.initOwner(Yukon.getYukonWindow());
                 st.initModality(Modality.APPLICATION_MODAL);
-                st.setTitle("Edit - " + applicationView.getApplication().getName());
+                st.setTitle(openEdit.getText()+" - " + applicationView.getApplication().getName());
                 st.setScene(loaded.getScene());
+                Yukon.getTranslator().applyTranslations(st.getScene());
                 st.setOnCloseRequest(windowEvent -> {
                     windowEvent.consume();
                     controller.onCancel();
                 });
                 ImageHelper.applyImage(st, YukonImage.LOGO);
                 st.show();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }

@@ -12,8 +12,8 @@
    <bottom>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <buttons>
-          <Button defaultButton="true" mnemonicParsing="false" text="Save" ButtonBar.buttonData="OK_DONE" onAction="#onSave"/>
-            <Button cancelButton="true" mnemonicParsing="false" text="Cancel" ButtonBar.buttonData="CANCEL_CLOSE" onAction="#onCancel"/>
+          <Button defaultButton="true" mnemonicParsing="false" text="§button.save" ButtonBar.buttonData="OK_DONE" onAction="#onSave"/>
+            <Button cancelButton="true" mnemonicParsing="false" text="§button.cancel" ButtonBar.buttonData="CANCEL_CLOSE" onAction="#onCancel"/>
         </buttons>
       </ButtonBar>
    </bottom>

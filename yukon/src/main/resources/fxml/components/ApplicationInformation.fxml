@@ -3,16 +3,17 @@
 <!--suppress XmlHighlighting -->
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+
 <fx:root type="VBox" prefWidth="400.0" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <VBox spacing="5.0">
-        <Label text="Executable"/>
+        <Label text="§label.executable"/>
         <HBox spacing="5.0" VBox.vgrow="ALWAYS">
             <TextField fx:id="pathField" HBox.hgrow="ALWAYS"/>
-            <Button mnemonicParsing="false" text="Select" onAction="#onSelectFile"/>
+            <Button mnemonicParsing="false" text="§button.select" onAction="#onSelectFile"/>
         </HBox>
     </VBox>
     <VBox spacing="5.0">
-        <Label text="Name"/>
+        <Label text="§label.name"/>
         <TextField fx:id="nameField"/>
     </VBox>
 </fx:root>
