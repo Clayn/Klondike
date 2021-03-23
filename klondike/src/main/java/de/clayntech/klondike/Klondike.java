@@ -2,6 +2,7 @@ package de.clayntech.klondike;
 
 import de.clayntech.klondike.cli.KlondikeCli;
 import de.clayntech.klondike.impl.KlondikeApplicationRepository;
+import de.clayntech.klondike.impl.KlondikeRunner;
 import de.clayntech.klondike.log.KlondikeLoggerFactory;
 import de.clayntech.klondike.sdk.ApplicationRepository;
 import de.clayntech.klondike.util.KlondikeVersion;
@@ -38,6 +39,14 @@ public class Klondike implements Callable<Integer> {
     private List<String> parameter;
     private final AtomicInteger state=new AtomicInteger(0);
     private ApplicationRepository repository;
+
+    private Klondike() {
+
+    }
+
+    public KlondikeRunner getRunner() {
+        return new KlondikeRunner();
+    }
 
     public static void main(String[] args){
         Klondike klondike = new Klondike();
