@@ -13,8 +13,7 @@ public class AddCommand implements Command{
     @Override
     public String perform(Klondike klondike, Scanner input, String... args) throws Exception {
         if(args==null||args.length!=2) {
-            System.out.println("Add needs two arguments. Usage: 'add <name> <executable>'");
-            return null;
+            throw new InvalidParameterException("add",2,"<name>","<executable>");
         }
         String name=args[0];
         String exe=args[1];

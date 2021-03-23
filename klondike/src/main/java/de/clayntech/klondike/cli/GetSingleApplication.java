@@ -12,7 +12,7 @@ public class GetSingleApplication implements Command {
     @Override
     public String perform(Klondike klondike, Scanner input, String... args) throws Exception {
         if(args==null||args.length<1) {
-            throw new IllegalArgumentException();
+            throw new InvalidParameterException("get",1,"<appname>");
         }
         String appName=args.length>1?args[1]:args[0];
         KlondikeApplication app=klondike.getRepository().getApplication(appName);
