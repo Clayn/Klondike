@@ -2,6 +2,7 @@ package de.clayntech.klondike.cli;
 
 import de.clayntech.klondike.Klondike;
 import de.clayntech.klondike.impl.KlondikeRunner;
+import de.clayntech.klondike.log.KlondikeLoggerFactory;
 import de.clayntech.klondike.sdk.ApplicationRepository;
 import de.clayntech.klondike.sdk.KlondikeApplication;
 
@@ -23,6 +24,7 @@ public class ExecCommand implements Command{
         KlondikeRunner runner=klondike.getRunner();
         Thread t=new Thread(()-> {
             try {
+                KlondikeLoggerFactory.getLogger().debug("Executing app: {} on {}",runner,app);
                 runner.execute(app);
             } catch (Exception e) {
                 throw new RuntimeException(e);
