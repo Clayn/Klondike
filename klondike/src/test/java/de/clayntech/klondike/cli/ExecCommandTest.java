@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
 import java.io.File;
 import java.util.Collections;
@@ -15,7 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ExecCommandTest extends CommandTest{
     @Override
     protected void setup0() {
-        KlondikeRunner runner= Mockito.mock(KlondikeRunner.class);
+        KlondikeRunner runner= Mockito.spy(new KlondikeRunner());
         Mockito.when(klondike.getRunner()).thenReturn(runner);
     }
 
@@ -32,14 +34,25 @@ public class ExecCommandTest extends CommandTest{
     }
 
     @Test
+    @Timeout(2)
     public void testExecute() throws Exception {
         KlondikeApplication app1= Mockito.mock(KlondikeApplication.class);
         Mockito.when(app1.getName()).thenReturn("App");
         Mockito.when(app1.getExecutable()).thenReturn(new File(""));
         Mockito.when(repository.getApplications()).thenReturn(Collections.singletonList(app1));
         KlondikeRunner runner = klondike.getRunner();
-        Mockito.doNothing().when(runner).execute(Mockito.any());
-        new ExecCommand().perform(klondike,scanner,"App");
+
+        Object lock=new Object();
+        Mockito.doAnswer(invocationOnMock -> {
+            synchronized (lock) {
+                lock.notifyAll();
+            }
+            return null;
+        }).when(runner).execute(Mockito.any());
+        synchronized (lock) {
+            new ExecCommand().perform(klondike,scanner,"App");
+            lock.wait();
+        }
         Mockito.verify(runner,Mockito.times(1)).execute(Mockito.any());
     }
 
@@ -56,13 +69,16 @@ public class ExecCommandTest extends CommandTest{
         Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
             if(e.getCause() instanceof Exception) {
                 if("Test".equals(e.getCause().getMessage())) {
-                    count.set(1);
+                    synchronized (count) {
+                        count.set(1);
+                        count.notify();
+                    }
                 }
             }
         });
-        new ExecCommand().perform(klondike,scanner,"App");
-        while(count.get()==0) {
-            Thread.sleep(10);
+        synchronized (count) {
+            new ExecCommand().perform(klondike,scanner,"App");
+            count.wait();
         }
         Assertions.assertEquals(1,count.get());
         Thread.setDefaultUncaughtExceptionHandler(null);

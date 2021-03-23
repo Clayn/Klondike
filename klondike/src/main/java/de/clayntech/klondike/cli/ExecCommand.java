@@ -24,7 +24,6 @@ public class ExecCommand implements Command{
         KlondikeRunner runner=klondike.getRunner();
         Thread t=new Thread(()-> {
             try {
-                KlondikeLoggerFactory.getLogger().debug("Executing app: {} on {}",runner,app);
                 runner.execute(app);
             } catch (Exception e) {
                 throw new RuntimeException(e);
